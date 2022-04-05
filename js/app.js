@@ -1,8 +1,27 @@
 // Variables
-const resultado = document.querySelector('#resultado'),
-      yearSelected = document.querySelector('#year'),
+const marca = document.querySelector('#marca'),
+      year = document.querySelector('#year'),
       maxYear = new Date().getFullYear(),
-      minYear = maxYear - 12;
+      minYear = maxYear - 12, 
+      precioMinimo = document.querySelector('#minimo'),
+      precioMaximo = document.querySelector('#maximo'),
+      puertas = document.querySelector('#puertas'),
+      transmision = document.querySelector('#transmision'),
+      color = document.querySelector('#color');
+
+// Contenedor para los resultados
+const resultado = document.querySelector('#resultado');
+
+// Generar un objeto con la busqueda
+const datosBusqueda = {
+    marca: '',
+    year: '',
+    precioMinimo: '',
+    precioMaximo: '',
+    puertas: '',
+    transmision: '',
+    color: '',
+}
 
 // Eventos
 document.addEventListener('DOMContentLoaded', ()=> {
@@ -11,6 +30,17 @@ document.addEventListener('DOMContentLoaded', ()=> {
    // Llena las opciones de años
    llenarSelect();
 });
+
+// Event Listener para los select de búsqueda
+marca.addEventListener('change', (e) => getSelectValue(e, 'marca') );
+year.addEventListener('change', (e) => getSelectValue(e, 'year') );
+precioMinimo.addEventListener('change', (e) => getSelectValue(e, 'precioMinimo') );
+precioMaximo.addEventListener('change', (e) => getSelectValue(e, 'precioMaximo') );
+puertas.addEventListener('change', (e) => getSelectValue(e, 'puertas') );
+transmision.addEventListener('change', (e) => getSelectValue(e, 'transmision') );
+color.addEventListener('change', (e) => getSelectValue(e, 'color') );
+
+function getSelectValue(e, objectProperty){ datosBusqueda[`${objectProperty}`] = e.target.value;}
 
 
 // Funciones
