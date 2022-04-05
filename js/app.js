@@ -25,7 +25,7 @@ const datosBusqueda = {
 
 // Eventos
 document.addEventListener('DOMContentLoaded', ()=> {
-   mostrarAutos(); // Muestra los autos al cargar
+   mostrarAutos(autos); // Muestra los autos al cargar
 
    // Llena las opciones de años
    llenarSelect();
@@ -42,7 +42,8 @@ color.addEventListener('change', (e) => getSelectValue(e, 'color') );
 
 
 // Funciones
-function mostrarAutos(){
+function mostrarAutos(autos){
+    limpiarHTML(); // Elimina el HTML previo
     autos.forEach( auto => {
         const autoHTML = document.createElement('p');
         const {marca, modelo, year, puertas, transmision, precio, color} = auto;
@@ -65,11 +66,19 @@ function llenarSelect(){
 
 function getSelectValue(e, objectProperty){ datosBusqueda[`${objectProperty}`] = e.target.value; filtrarAuto();}
 
+// Limpiar HTML
+function limpiarHTML(){
+    while(resultado.firstChild){
+        resultado.removeChild(resultado.firstChild);
+    }
+}
+
 // Función que filtra en base a la búsqueda
 function filtrarAuto(){
-    const resultado = autos.filter( filtrarMarca ).filter( filtrarYear )
+    const resultado = autos.filter( filtrarMarca ).filter( filtrarYear ).filter( filtrarPrecioMinimo ).filter( filtrarPrecioMaximo );
 
-    console.log(resultado);
+    // console.log(resultado);
+    mostrarAutos(resultado);
 }
 
 function filtrarMarca(auto){
@@ -84,6 +93,22 @@ function filtrarYear(auto) {
     const { year } = datosBusqueda;
     if( year ){ 
         return auto.year === parseInt(year);
+    }
+    return auto;
+}
+
+function filtrarPrecioMinimo(auto){
+    const { precioMinimo } = datosBusqueda;
+    if( precioMinimo ){ 
+        return auto.precio >= precioMinimo;
+    }
+    return auto;
+}
+
+function filtrarPrecioMaximo(auto){
+    const { precioMaximo } = datosBusqueda;
+    if( precioMaximo ){ 
+        return auto.precio <= precioMaximo;
     }
     return auto;
 }
