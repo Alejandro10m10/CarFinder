@@ -48,7 +48,7 @@ function mostrarAutos(autos){
         const autoHTML = document.createElement('p');
         const {marca, modelo, year, puertas, transmision, precio, color} = auto;
         autoHTML.textContent = `
-            ${marca} ${modelo} - Año: ${year} - ${puertas} Puertas - Transmisión: ${transmision} - Precio: ${precio} - Color: ${color}
+            ${marca} ${modelo} - Año: ${year} - ${puertas} Puertas - Transmisión: ${transmision} - Precio: $${precio} - Color: ${color}
         `;
         // Insertar en el HTML
         resultado.appendChild(autoHTML);
@@ -75,7 +75,8 @@ function limpiarHTML(){
 
 // Función que filtra en base a la búsqueda
 function filtrarAuto(){
-    const resultado = autos.filter( filtrarMarca ).filter( filtrarYear ).filter( filtrarPrecioMinimo ).filter( filtrarPrecioMaximo );
+    const resultado = autos.filter( filtrarMarca ).filter( filtrarYear ).filter( filtrarPrecioMinimo ).filter( filtrarPrecioMaximo ).filter( 
+                            filtrarPuertas ).filter( filtrarTransmision).filter( filtrarColor );
 
     // console.log(resultado);
     mostrarAutos(resultado);
@@ -109,6 +110,30 @@ function filtrarPrecioMaximo(auto){
     const { precioMaximo } = datosBusqueda;
     if( precioMaximo ){ 
         return auto.precio <= precioMaximo;
+    }
+    return auto;
+}
+
+function filtrarPuertas(auto){
+    const { puertas } = datosBusqueda;
+    if( puertas ){ 
+        return auto.puertas === parseInt(puertas);
+    }
+    return auto;
+}
+
+function filtrarTransmision(auto){
+    const { transmision } = datosBusqueda;
+    if( transmision ){ 
+        return auto.transmision === transmision;
+    }
+    return auto;
+}
+
+function filtrarColor(auto){
+    const { color } = datosBusqueda;
+    if( color ){ 
+        return auto.color === color;
     }
     return auto;
 }
