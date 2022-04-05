@@ -40,8 +40,6 @@ puertas.addEventListener('change', (e) => getSelectValue(e, 'puertas') );
 transmision.addEventListener('change', (e) => getSelectValue(e, 'transmision') );
 color.addEventListener('change', (e) => getSelectValue(e, 'color') );
 
-function getSelectValue(e, objectProperty){ datosBusqueda[`${objectProperty}`] = e.target.value;}
-
 
 // Funciones
 function mostrarAutos(){
@@ -49,9 +47,8 @@ function mostrarAutos(){
         const autoHTML = document.createElement('p');
         const {marca, modelo, year, puertas, transmision, precio, color} = auto;
         autoHTML.textContent = `
-            ${marca} ${modelo} - ${year} - ${puertas} Puertas - Transmisión: ${transmision} - Precio: ${precio} - Color: ${color}
+            ${marca} ${modelo} - Año: ${year} - ${puertas} Puertas - Transmisión: ${transmision} - Precio: ${precio} - Color: ${color}
         `;
-
         // Insertar en el HTML
         resultado.appendChild(autoHTML);
     });
@@ -64,4 +61,21 @@ function llenarSelect(){
         opcion.textContent = i;
         year.appendChild(opcion); // Agrega las opciones del año al select
     }
+}
+
+function getSelectValue(e, objectProperty){ datosBusqueda[`${objectProperty}`] = e.target.value; filtrarAuto();}
+
+// Función que filtra en base a la búsqueda
+function filtrarAuto(){
+    const resultado = autos.filter( filtrarMarca );
+
+    console.log(resultado);
+}
+
+function filtrarMarca(auto){
+    const { marca } = datosBusqueda;
+    if( marca ){ 
+        return auto.marca === marca;
+    }
+    return auto;
 }
