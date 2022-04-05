@@ -96,4 +96,9 @@ form .row{
     height: 510px;
     top: -9px;
     overflow-y: scroll;
+    padding-right: 20px;
+}
+
+#resultado p:nth-child(even){
+    background-color: #f3f3f3;
 }

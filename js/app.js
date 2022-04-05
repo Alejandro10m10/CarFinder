@@ -50,8 +50,10 @@ function mostrarAutos(autos){
         autoHTML.textContent = `
             ${marca} ${modelo} - Año: ${year} - ${puertas} Puertas - Transmisión: ${transmision} - Precio: $${precio} - Color: ${color}
         `;
+        resultado.style.overflowY = 'scroll';
         // Insertar en el HTML
         resultado.appendChild(autoHTML);
+        
     });
 }
 
@@ -78,8 +80,21 @@ function filtrarAuto(){
     const resultado = autos.filter( filtrarMarca ).filter( filtrarYear ).filter( filtrarPrecioMinimo ).filter( filtrarPrecioMaximo ).filter( 
                             filtrarPuertas ).filter( filtrarTransmision).filter( filtrarColor );
 
-    // console.log(resultado);
-    mostrarAutos(resultado);
+    if(resultado.length){
+        mostrarAutos(resultado);
+    } else{
+        noResultado();
+    }
+}
+
+function noResultado(){
+    limpiarHTML();
+    const noResultado = document.createElement('p');
+    noResultado.classList.add('alerta', 'error');
+    noResultado.textContent = "No hay Resultados, Intenta con otros parámetros de búsqueda"
+    noResultado.style.margin = '0 20px';
+    resultado.style.overflowY = 'hidden';
+    resultado.appendChild(noResultado);
 }
 
 function filtrarMarca(auto){
