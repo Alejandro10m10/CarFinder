@@ -67,7 +67,7 @@ function getSelectValue(e, objectProperty){ datosBusqueda[`${objectProperty}`] =
 
 // Función que filtra en base a la búsqueda
 function filtrarAuto(){
-    const resultado = autos.filter( filtrarMarca );
+    const resultado = autos.filter( filtrarMarca ).filter( filtrarYear )
 
     console.log(resultado);
 }
@@ -76,6 +76,14 @@ function filtrarMarca(auto){
     const { marca } = datosBusqueda;
     if( marca ){ 
         return auto.marca === marca;
+    }
+    return auto;
+}
+
+function filtrarYear(auto) {
+    const { year } = datosBusqueda;
+    if( year ){ 
+        return auto.year === parseInt(year);
     }
     return auto;
 }
